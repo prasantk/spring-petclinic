@@ -35,7 +35,7 @@ pipeline {
                 docker {
                   reuseNode true 
                   image 'maven:3.5-alpine'
-                  args '-v /root/.m2:/root/.m2'
+                  args '-v /root/.m2:/root/.m2 --network jenkins_default'
               }
             }
             steps {
