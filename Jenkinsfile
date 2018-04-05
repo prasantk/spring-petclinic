@@ -50,6 +50,21 @@ pipeline {
             }
         }
 
+        stage('SonarQube analysis') {
+            agent {
+                docker {
+                    reuseNode true
+                    image "maven:3.5-alpine"
+                    args "-v /root/.m2:/root/.m2 --network jenkins_default"
+                }
+            }
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh "mvn sonar:sonar -Dsonar.projectVersion=${env.TAG}"
+                }
+            }
+        }
+
         // stage('Deploy') {
         //   steps {
         //     input 'Do you approve the deployment?'
