@@ -39,7 +39,7 @@ pipeline {
               }
             }
             steps {
-                sh 'mvn sureFire:test'
+                sh 'mvn test'
             }
             post {
                 always {
@@ -81,7 +81,7 @@ pipeline {
             }
             steps {
                 //sh 'mvn clean package'
-                sh 'mvn -B -DskipTests clean package'
+                sh 'mvn -B -DskipTests package'
                 //junit '**/target/surefire-reports/TEST-*.xml'
                 //archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
