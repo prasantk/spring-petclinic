@@ -13,20 +13,18 @@ pipeline {
     }
 
     stages {
-        
-        stage('Build') {
+
+
+        stage('Compile') {
             agent {
                 docker {
-                  reuseNode true 
-                  image 'maven:3.5-alpine'
-                  args '-v /root/.m2:/root/.m2'
-              }
+                    reuseNode true
+                    image 'maven:3.5-alpine'
+                    args '-v /root/.m2:/root/.m2'
+                }
             }
-            steps {
-                //sh 'mvn clean package'
-                sh 'mvn -B -DskipTests clean package'
-                //junit '**/target/surefire-reports/TEST-*.xml'
-                //archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            steps{
+                sh "mvn -B -DskipTests clean compile"
             }
         }
 
@@ -68,6 +66,22 @@ pipeline {
                     "-Dsonar.sources=src/main/ " +
                     "-Dsonar.tests=src/test/"
                 }
+            }
+        }
+
+        stage('Package') {
+            agent {
+                docker {
+                  reuseNode true 
+                  image 'maven:3.5-alpine'
+                  args '-v /root/.m2:/root/.m2'
+              }
+            }
+            steps {
+                //sh 'mvn clean package'
+                sh 'mvn -B -DskipTests clean package'
+                //junit '**/target/surefire-reports/TEST-*.xml'
+                //archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
         }
 
