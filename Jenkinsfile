@@ -87,7 +87,7 @@ pipeline {
 
         stage("Docker build") {
             steps {
-                sh "docker build -t prasantk/sprint-petclinic:${env.TAG} ."
+                sh "docker build -t prasantk/spring-petclinic:${env.TAG} ."
             }
         }
 
@@ -102,7 +102,13 @@ pipeline {
 
         stage("Docker push") {
             steps {
-                sh "docker push prasantk/sprint-petclinic:${env.TAG}"
+                sh "docker push prasantk/spring-petclinic:${env.TAG}"
+            }
+        }
+
+        stage("Deploy to staging") {
+            steps {
+                sh "URL=staging.petclinic.local docker-compose -p staging up -d"
             }
         }
 
