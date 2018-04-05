@@ -85,6 +85,27 @@ pipeline {
             }
         }
 
+        stage("Docker build") {
+            steps {
+                sh "docker build -t prasantk/sprint-petclinic:${env.TAG} ."
+            }
+        }
+
+        stage("Docker login") {
+            steps {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub',
+                                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                    sh "docker login --username $USERNAME --password $PASSWORD"
+                }
+            }
+        }
+
+        stage("Docker push") {
+            steps {
+                sh "docker push prasantk/sprint-petclinic:${env.TAG}"
+            }
+        }
+
         // stage('Deploy') {
         //   steps {
         //     input 'Do you approve the deployment?'
