@@ -43,8 +43,8 @@ pipeline {
             }
             post {
                 always {
-                    //junit 'target/surefire-reports/*.xml'
-                    junit '**/target/surefire-reports/TEST-*.xml'
+                    junit 'target/surefire-reports/*.xml'
+                    //junit '**/target/surefire-reports/TEST-*.xml'
                 }
             }
         }
@@ -65,7 +65,8 @@ pipeline {
                     "-Dsonar.projectVersion=${env.TAG} " +
                     "-Dsonar.language=java " +
                     "-Dsonar.sources=src/main/ " +
-                    "-Dsonar.tests=src/test/"
+                    "-Dsonar.tests=src/test/ " +
+                    "-Dsonar.junit.reportPaths=target/surefire-reports/"
                 }
             }
         }
