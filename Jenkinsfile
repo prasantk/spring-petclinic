@@ -35,7 +35,7 @@ pipeline {
                 docker {
                   reuseNode true 
                   image 'maven:3.5-alpine'
-                  args '-v /root/.m2:/root/.m2 --network jenkins_default'
+                  args '-v /root/.m2:/root/.m2'
               }
             }
             steps {
@@ -109,6 +109,7 @@ pipeline {
 
         stage("Deploy to staging") {
             steps {
+                input 'Do you approve the deployment?'
                 sh "URL=staging.petclinic.local docker-compose -p staging up -d"
             }
         }
@@ -121,5 +122,15 @@ pipeline {
         //   }
         // }
 
+    }
+
+    post {
+        success {
+            slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+
+        failure {
+            slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")           
+        }
     }
 }

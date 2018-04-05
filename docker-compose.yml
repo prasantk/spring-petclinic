@@ -9,13 +9,13 @@ services:
     environment:
       - VIRTUAL_HOST=${URL}
       - VIRTUAL_PORT=8080
-  mysql:
-    image: mysql
+  #mysql:
+  #  image: mysql
     # ports:
     # - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=test
+  #  environment:
+  #    - MYSQL_ROOT_PASSWORD=root
+  #    - MYSQL_DATABASE=test
     # volumes:
     #   - "./conf.d:/etc/mysql/conf.d:ro"
 networks:
