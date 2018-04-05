@@ -23,9 +23,30 @@ pipeline {
               }
             }
             steps {
-                sh 'mvn clean package'
-                junit '**/target/surefire-reports/TEST-*.xml'
-                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                //sh 'mvn clean package'
+                sh 'mvn -B -DskipTests clean package'
+                //junit '**/target/surefire-reports/TEST-*.xml'
+                //archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            }
+        }
+
+        stage('Unit test') {
+          
+            agent {
+                docker {
+                  reuseNode true 
+                  image 'maven:3.5-alpine'
+                  args '-v /root/.m2:/root/.m2'
+              }
+            }
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    //junit 'target/surefire-reports/*.xml'
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                }
             }
         }
 
