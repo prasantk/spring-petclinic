@@ -60,14 +60,13 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('SonarQube') { 
-                    sh 'mvn sonar:sonar ' +
-                    '-Dsonar.projectKey=maven:spring-petclinic ' +
-                    '-Dsonar.projectName=Maven :: Spring Petclinic Project ' +
+                    sh "mvn sonar:sonar " +
+                    "-Dsonar.projectKey=maven:spring-petclinic " +
+                    "-Dsonar.projectName=Maven :: Spring Petclinic Project " +
                     "-Dsonar.projectVersion=${env.TAG} " +
-                    '-Dsonar.language=java ' +
-                    '-Dsonar.sources=src/main/ ' +
-                    '-Dsonar.tests=src/test/ ' +
-                    '-Dsonar.sourceEncoding=UTF-8'
+                    "-Dsonar.language=java " +
+                    "-Dsonar.sources=src/main/ " +
+                    "-Dsonar.tests=src/test/"
                 }
             }
         }
