@@ -18,7 +18,7 @@ pipeline {
             agent {
                 docker {
                   reuseNode true 
-                  docker 'maven:3.5-alpine'
+                  image 'maven:3.5-alpine'
                   args '-v /root/.m2:/root/.m2'
               }
             }
