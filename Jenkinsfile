@@ -62,7 +62,7 @@ pipeline {
                 withSonarQubeEnv('SonarQube') { 
                     sh "mvn sonar:sonar " +
                     "-Dsonar.projectKey=maven:spring-petclinic " +
-                    "-Dsonar.projectName=Maven :: Spring Petclinic Project " +
+                    "-Dsonar.projectName='Maven :: Spring Petclinic Project' " +
                     "-Dsonar.projectVersion=${env.TAG} " +
                     "-Dsonar.language=java " +
                     "-Dsonar.sources=src/main/ " +
